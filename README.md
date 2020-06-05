@@ -9,7 +9,7 @@ general form:
 x ≡ b<sub>n</sub> (mod m<sub>n</sub>)
 
 ## Usage
-instantialize CRT:
+instantialize CRT:   
 `crt = CRT::CRT.new(2, 3, 2, 3, 5, 7)`
 
 the args start with b<sub>1</sub>, b<sub>2</sub>, ... , b<sub>n</sub>, and m<sub>1</sub>, m<sub>2</sub>, ... , m<sub>n</sub> are as follows
