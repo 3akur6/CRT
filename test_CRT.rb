@@ -4,7 +4,7 @@ require_relative "CRT.rb"
 class TestCRT < Test::Unit::TestCase
   def test_CRT
     crt = CRT::CRT.new(1, 5, 4, 10, 5, 6, 7, 11)
-    
+
     assert_equal(crt.b1, 1)
     assert_equal(crt.b2, 5)
     assert_equal(crt.b3, 4)

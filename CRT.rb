@@ -1,6 +1,29 @@
 module CRT
   class CRT
 
+    class << self
+      def simple_congruence_solve(left, mod)
+        b, a = [left, mod].sort
+        (cache_m ||= []) << a / b
+        (cache_x ||= []) << 1
+        (cache_y ||= []) << -(a / b)
+        i = 1
+        until (c = a % b) == 1
+          a, b = b, c
+          cache_m << a / b
+          if i >= 2
+            cache_x << cache_x[i - 2] - cache_m[i] * cache_x[i - 1]
+            cache_y << cache_y[i - 2] - cache_m[i] * cache_y[i - 1]
+          else
+            cache_x << -cache_m[i]
+            cache_y << 1 + cache_m[i] * cache_m[i - 1]
+          end
+          i += 1
+        end
+        (left > mod ? cache_x[-1] : cache_y[-1]) % mod
+      end
+    end
+
     def initialize(*accessor)
       half = accessor.length / 2
       @bs = accessor.take(half)
@@ -50,16 +73,7 @@ module CRT
       # mmi1 = x(mod m1)
       @ms.each_with_index do |x, idx|
         self.class.define_method("mmi#{idx + 1}".to_sym) do
-          i = 1
-          a, b = send("mm#{idx + 1}".to_sym), x
-          c = a % b
-          return 1 if c == 1
-          until c == 1
-            a, b = b, c
-            c = a % b
-            i *= a / b
-          end
-          -i % x
+          self.class.simple_congruence_solve(send("mm#{idx + 1}".to_sym), x)
         end
       end
     end
