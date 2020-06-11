@@ -27,5 +27,10 @@ class TestCRT < Test::Unit::TestCase
 
     assert_equal(crt.almost, 2111)
     assert_equal(crt.result, "2111(mod 2310)")
+
+    assert_equal("91(mod 120)", CRT::CRT.new(3, 1, 1, 8, 3, 5).result)
+    assert_equal("53(mod 60)", CRT::CRT.new(1, 2, 3, 4, 3, 5).result)
+    assert_equal("37(mod 187)", CRT::CRT.new(4, 3, 11, 17).result)
+    assert_equal("1837(mod 2310)", CRT::CRT.new(2, 1, 3, 0, 5, 6, 7, 11).result)
   end
 end
